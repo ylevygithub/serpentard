@@ -9,34 +9,47 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
 
-int mycat(int ac, char *av)
+int mycatone(int fd)
 {
-    int fd;
-    char str[30000] = "";
+    char b[30000];
+    int fd1;
 
-    fd = open(av, O_RDONLY);
     if (fd == -1)
         return (84);
-    read(fd, str, 30000);
-    my_putstr(str);
-    close(fd);
+    fd1 = read(fd, b, 30000);
+    if (fd1 == 0)
+        return (5);
+    b[fd1] = '\0';
+    my_putstr(b);
     return (0);
 }
 
-void mycatone(int ac, char **av)
+int mycattwo(int ac, char **av)
 {
     int i = 1;
+    int fd = 0;
 
-    while (i != ac) {
-        mycat(ac, av[i]);
+    while (i < ac) {
+        fd = open(av[i], O_RDONLY);
+        mycatone(fd);
         i++;
+        close(fd);
     }
+    return (0);
 }
-
+    
 int main(int ac,char **av)
 {
-   
-    mycatone(ac, av);
+    int a = 0;
+
+    if (ac == 1) {
+        while (1) {
+            if (mycatone(0) == 5)
+                return (0);
+        }
+    }
+    mycattwo(ac, av);
     return (0);
 }
