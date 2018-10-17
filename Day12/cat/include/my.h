@@ -10,5 +10,8 @@
 
 void my_putchar(char);
 int my_putstr(char const *);
+int mycatone(int fd);
+int mycattwo(int ac, char **av);
+
 
 #endif /*__MY_H__ */

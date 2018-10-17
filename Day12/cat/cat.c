@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "./include/my.h"
 
 int mycatone(int fd)
 {
@@ -42,8 +43,6 @@ int mycattwo(int ac, char **av)
     
 int main(int ac,char **av)
 {
-    int a = 0;
-
     if (ac == 1) {
         while (1) {
             if (mycatone(0) == 5)

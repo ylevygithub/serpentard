@@ -5,10 +5,11 @@
 ## Makefile
 ##
 
-CFLAGS +=	-I include -L -l
+CFLAGS =	-Wall -Wextra -Werror
 
-SRC	=	cat.c	\
-		my_putstr.c
+SRC	=	cat.c
+
+LDFLAGS = 	-L./lib/my -lmy
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -16,10 +17,14 @@ NAME	=	cat
 
 all:	$(NAME)
 
-$(NAME): $(SRC)	$(OBJ)
-	gcc -o $(NAME) $(OBJ)
+$(NAME): $(OBJ)
+	gcc -c lib/my/*.c
+	ar rc lib/my/libmy.a *.o
+	gcc -o $(NAME) $(SRC) $(CFLAGS) $(LDFLAGS)
 clean:
-	rm -f $(OBJ)
+	rm -f $(NAME)
+	rm lib/my/libmy.a
+	rm *.o
 fclean: clean
 	rm -f $(NAME)
 re:	fclean all
